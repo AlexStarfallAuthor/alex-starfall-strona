@@ -1,7 +1,7 @@
 const { GoogleGenerativeAI } = require("@google/generative-ai");
 
 exports.handler = async function (event, context) {
-
+    
     // 1. Sprawdź, czy to zapytanie POST
     if (event.httpMethod !== 'POST') {
         return { statusCode: 405, body: 'Method Not Allowed' };
@@ -22,9 +22,9 @@ exports.handler = async function (event, context) {
             return { statusCode: 400, body: 'No prompt provided.' };
         }
 
-        // 4. Skonfiguruj i wywołaj API Google
+        // 4. Skonfiguruj i wywołaj API Google (TUTAJ JEST POPRAWKA)
         const genAI = new GoogleGenerativeAI(API_KEY);
-        const model = genAI.getGenerativeModel({ model: "gemini-pro" });
+        const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
 
         const result = await model.generateContent(userPrompt);
         const response = await result.response;
