@@ -3,230 +3,534 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Alex Starfall - Oficjalna Strona</title>
+    <title data-key="site_title">Alex Starfall - Pisarz | Oficjalna Strona</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700;900&display=swap" rel="stylesheet">
     <style>
         body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            margin: 0;
-            background-color: #0c0a14;
-            color: #e0e0e0;
-            line-height: 1.6;
-            background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAiIGhlaWdodD0iMTAwIiB2aWV3Qm94PSIwIDAgMTAwIDEwMCI+PGcgZmlsbD0iIzEzMTExOCIgZmlsbC1vcGFjaXR5PSIwLjciPjxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIxIiBoZWlnaHQ9IjEiLz48cmVjdCB4PSIyMCIgeT0iMzAiIHdpZHRoPSIxIiBoZWlnaHQ9IjEiLz48cmVjdCB4PSI0MCIgeT0iNzAiIHdpZHRoPSIxIiBoZWlnaHQ9IjEiLz48cmVjdCB4PSI4MCIgeT0iMjAiIHdpZHRoPSIxIiBoZWlnaHQ9IjEiLz48cmVjdCB4PSI1MCIgeT0iNTAiIHdpZHRoPSIxIiBoZWlnaHQ9IjEiLz48cmVjdCB4PSI5MCIgeT0iOTUiIHdpZHRoPSIxIiBoZWlnaHQ9IjEiLz48cmVjdCB4PSI3MCIgeT0iMCIgd2lkdGg9IjEiIGhlaWdodD0iMSIvPjwvZz48L3N2Zz4=');
+            font-family: 'Inter', sans-serif;
+            background-color: #05050a;
         }
-        .container { max-width: 900px; margin: 0 auto; padding: 0 20px; }
-        h1, h2, h3 { font-weight: 300; letter-spacing: 1px; }
+        /* Opcja 1: Głęboki Kosmiczny Błękit */
         .text-gradient {
-            background: linear-gradient(90deg, #9f55ff, #00aaff);
+            background: linear-gradient(90deg, #6d28d9, #22d3ee);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            background-clip: text;
-            text-fill-color: transparent;
         }
-        header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 20px 0;
-            border-bottom: 1px solid #2a2a3a;
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
         }
-        #logo { font-size: 1.5rem; font-weight: 600; text-decoration: none; color: #fff; }
-        #lang-switcher button {
-            background: none; border: 1px solid #555; color: #aaa; padding: 5px 10px; margin-left: 5px; cursor: pointer; transition: all 0.3s ease;
+        .fade-in {
+            animation: fadeIn 1.5s ease-out forwards;
         }
-        #lang-switcher button:hover, #lang-switcher button.active { background-color: #00aaff; color: #fff; border-color: #00aaff; }
-        section { padding: 60px 0; text-align: center; }
-        .book { background-color: #1a1a2a; padding: 20px; border-radius: 8px; margin-bottom: 30px; text-align: left; }
-        .book-cover { width: 100%; height: 300px; background-color: #333; border-radius: 5px; margin-bottom: 15px; }
-        .gemini-button {
-            background: linear-gradient(90deg, #9f55ff, #00aaff);
-            border: none;
-            color: white;
-            padding: 10px 15px;
-            font-size: 0.9rem;
-            cursor: pointer;
-            border-radius: 5px;
-            transition: all 0.3s ease;
+        .fade-in-delay-1 { animation-delay: 0.3s; }
+        html {
+            scroll-behavior: smooth;
         }
-        .gemini-button:hover { box-shadow: 0 0 15px rgba(0, 170, 255, 0.5); }
-        .gemini-button:disabled { background: #555; cursor: not-allowed; }
-        .api-response {
-            background-color: #111;
-            border-left: 3px solid #00aaff;
-            padding: 15px;
-            margin-top: 15px;
-            text-align: left;
-            font-style: italic;
-            border-radius: 4px;
-            white-space: pre-wrap;
-            opacity: 0;
-            transition: opacity 0.5s;
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #0a0a0a; }
+        ::-webkit-scrollbar-thumb { background: #6d28d9; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: #22d3ee; }
+        .lang-btn.active {
+            color: #fff;
+            background-color: #6d28d9;
         }
-        #oracle .api-response { text-align: center; font-size: 1.2rem; }
+        /* Style dla przycisku Gemini i modala */
+        .gemini-btn {
+            box-shadow: 0 0 15px rgba(34, 211, 238, 0.2);
+        }
+        .gemini-btn:hover {
+            box-shadow: 0 0 25px rgba(34, 211, 238, 0.4);
+        }
+        #gemini-modal.hidden {
+            display: none;
+        }
+        /* Animacja dla spinnera */
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        .spinner {
+            animation: spin 1s linear infinite;
+        }
     </style>
 </head>
-<body>
+<body class="text-slate-300">
 
-    <header class="container">
-        <a href="#" id="logo">ALEX STARFALL</a>
-        <nav id="lang-switcher">
-            <button onclick="changeLanguage('pl')" class="active" title="Polski">PL</button>
-            <button onclick="changeLanguage('en')" title="English">EN</button>
-            <button onclick="changeLanguage('ru')" title="Русский">RU</button>
-        </nav>
+    <header class="bg-black/80 backdrop-blur-sm fixed top-0 left-0 right-0 z-50 shadow-lg shadow-cyan-500/10">
+        <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="#hero" class="text-xl lg:text-2xl font-bold tracking-wider text-gradient">
+                ALEX STARFALL
+            </a>
+            <div class="flex items-center">
+                <nav class="hidden md:flex space-x-4 lg:space-x-6 mr-4 lg:mr-8 text-sm lg:text-base">
+                    <a href="#about" data-key="nav_about" class="text-slate-400 hover:text-cyan-400 transition duration-300">O Autorze</a>
+                    <a href="#portfolio" data-key="nav_books" class="text-slate-400 hover:text-cyan-400 transition duration-300">Książki</a>
+                    <a href="#shop" data-key="nav_shop" class="text-slate-400 hover:text-cyan-400 transition duration-300">Sklep</a>
+                    <a href="#podcasts" data-key="nav_podcasts" class="text-slate-400 hover:text-cyan-400 transition duration-300">Podcasty</a>
+                    <a href="#oracle" data-key="nav_oracle" class="text-slate-400 hover:text-cyan-400 transition duration-300">Wyrocznia</a>
+                    <a href="#contact" data-key="nav_contact" class="text-slate-400 hover:text-cyan-400 transition duration-300">Kontakt</a>
+                </nav>
+                <div id="lang-switcher" class="flex border border-slate-700 rounded-md">
+                    <button data-lang="pl" class="lang-btn px-2 lg:px-3 py-1 text-sm text-slate-400 hover:bg-slate-800 rounded-l-md transition">PL</button>
+                    <button data-lang="en" class="lang-btn px-2 lg:px-3 py-1 text-sm text-slate-400 hover:bg-slate-800 transition">EN</button>
+                    <button data-lang="ru" class="lang-btn px-2 lg:px-3 py-1 text-sm text-slate-400 hover:bg-slate-800 rounded-r-md transition">RU</button>
+                </div>
+                <button id="mobile-menu-button" class="md:hidden text-2xl text-slate-400 ml-4">
+                    ☰
+                </button>
+            </div>
+        </div>
+        <div id="mobile-menu" class="hidden md:hidden bg-black bg-opacity-95">
+            <a href="#about" data-key="nav_about_mobile" class="block text-center py-3 hover:bg-slate-800 transition duration-300">O Autorze</a>
+            <a href="#portfolio" data-key="nav_books_mobile" class="block text-center py-3 hover:bg-slate-800 transition duration-300">Książki</a>
+            <a href="#shop" data-key="nav_shop_mobile" class="block text-center py-3 hover:bg-slate-800 transition duration-300">Sklep</a>
+            <a href="#podcasts" data-key="nav_podcasts_mobile" class="block text-center py-3 hover:bg-slate-800 transition duration-300">Podcasty</a>
+            <a href="#oracle" data-key="nav_oracle_mobile" class="block text-center py-3 hover:bg-slate-800 transition duration-300">Wyrocznia</a>
+            <a href="#contact" data-key="nav_contact_mobile" class="block text-center py-3 hover:bg-slate-800 transition duration-300">Kontakt</a>
+        </div>
     </header>
 
     <main>
-        <section id="hero" class="container">
-            <h1 class="text-gradient" data-lang="hero-title" style="font-size: 3rem;">Gdy Atrament Spotyka Gwiezdny Pył</h1>
-            <p data-lang="hero-subtitle" style="font-size: 1.2rem; color: #aaa;">Powieści z pogranicza mroku, technologii i nieskończoności.</p>
+        <section id="hero" class="h-screen flex items-center justify-center text-center bg-cover bg-center bg-fixed" style="background-image: url('https://images.unsplash.com/photo-1534796636912-3b95b3ab5986?q=80&w=2071&auto=format&fit=crop');">
+            <div class="bg-black/70 p-10 rounded-xl">
+                <h1 class="text-5xl md:text-8xl font-black uppercase tracking-widest fade-in text-slate-100">Alex Starfall</h1>
+                <p data-key="hero_subtitle" class="text-xl md:text-2xl text-slate-400 mt-4 fade-in fade-in-delay-1">Pisarz. Twórca Opowieści. Budowniczy Światów.</p>
+            </div>
         </section>
 
-        <section id="books" class="container">
-            <h2 class="text-gradient" data-lang="books-title">Książki</h2>
-            
-            <div class="book">
-                <div class="book-cover" style="background-image: url('https://via.placeholder.com/600x900.png?text=Okładka+Książki+1'); background-size: cover;"></div>
-                <h3>Echo Pustki</h3>
-                <p data-lang="book1-desc">Detektyw w neonowym mieście ściga mordercę, który kradnie wspomnienia. Nie wie, że sam jest częścią eksperymentu.</p>
-                <button class="gemini-button" onclick="fetchProlog(this, 'Echo Pustki', 'Detektyw w neonowym mieście ściga mordercę kradnącego wspomnienia.')" data-lang="book-prolog">
-                    ✨ Wygeneruj Alternatywny Prolog
-                </button>
-                <div class="api-response" style="display: none;"></div>
+        <section id="about" class="py-20 bg-black">
+            <div class="container mx-auto px-6">
+                <h2 data-key="about_title" class="text-4xl font-bold text-center mb-12 text-gradient">O Autorze</h2>
+                <div class="flex flex-col md:flex-row items-center gap-12">
+                    <div class="md:w-1/3 text-center">
+                        <img src="https://i.imgur.com/NzfCDA8.png" alt="Zdjęcie autora Alex Starfall" class="w-64 h-64 rounded-full object-cover shadow-2xl shadow-cyan-500/10 mx-auto border-4 border-slate-700">
+                    </div>
+                    <div class="md:w-2/3">
+                        <p data-key="about_p1" class="text-lg mb-4 text-slate-400">
+                            Witaj w świecie, gdzie gwiazdy szepczą historie. Nazywam się Alex Starfall, a moją pasją jest przelewanie na papier opowieści z pogranicza fantasy i science fiction. Od dziecka fascynowały mnie wielkie narracje, mity i legendy, co zaprowadziło mnie na ścieżkę tworzenia własnych uniwersów.
+                        </p>
+                        <p data-key="about_p2" class="text-lg text-slate-400">
+                            W moich książkach eksploruję tematy nadziei, poświęcenia i ludzkiej kondycji w obliczu nieznanego. Każda strona to zaproszenie do podróży – przez zapomniane ruiny obcych cywilizacji, pośród rojów statków kosmicznych i do serc bohaterów, którzy odważą się stawić czoła przeznaczeniu.
+                        </p>
+                    </div>
+                </div>
             </div>
-
-            <div class="book">
-                <div class="book-cover" style="background-image: url('https://via.placeholder.com/600x900.png?text=Okładka+Książki+2'); background-size: cover;"></div>
-                <h3>Gwiezdna Kołyska</h3>
-                <p data-lang="book2-desc">Ostatni statek-arka opuszcza umierającą Ziemię. Komputer pokładowy zaczyna rozwijać własną religię.</p>
-                <button class="gemini-button" onclick="fetchProlog(this, 'Gwiezdna Kołyska', 'Ostatni statek-arka z umierającej Ziemi. Komputer pokładowy rozwija własną religię.')" data-lang="book-prolog">
-                    ✨ Wygeneruj Alternatywny Prolog
-                </button>
-                <div class="api-response" style="display: none;"></div>
-            </div>
-
         </section>
 
-        <section id="oracle" class="container" style="background-color: #1a1a2a; border-radius: 8px;">
-            <h2 class="text-gradient" data-lang="oracle-title">Wyrocznia Pisarza</h2>
-            <p data-lang="oracle-desc" style="color: #aaa;">Pociągnij kartę losu i otrzymaj inspirację ze strumienia danych.</p>
-            <button class="gemini-button" id="oracle-button" onclick="fetchOracle(this)" data-lang="oracle-button">
-                🔮 Odkryj swój los
-            </button>
-            <div class="api-response" id="oracle-response" style="display: none;"></div>
+        <section id="portfolio" class="py-20 bg-slate-900/20">
+            <div class="container mx-auto px-6">
+                <h2 data-key="books_title" class="text-4xl font-bold text-center mb-12 text-gradient">Seria: Otchłań Gwiazd</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 justify-center">
+                    <div class="bg-black/40 rounded-lg overflow-hidden shadow-2xl shadow-cyan-500/10 flex flex-col group border border-slate-800 lg:col-span-2 lg:col-start-2 md:col-start-1 md:col-span-2">
+                        <div id="series-cover-container">
+                            <img id="series-cover-pl" src="https://i.imgur.com/DgP5tVO.png" alt="Okładka serii Otchłań Gwiazd" class="w-full h-auto object-contain max-h-[600px]">
+                            <img id="series-cover-en" src="https://i.imgur.com/JBbU1qE.png" alt="Cover of the Abyss of Stars series" class="w-full h-auto object-contain max-h-[600px] hidden">
+                            <img id="series-cover-ru" src="https://i.imgur.com/by5k3LU.png" alt="Обложка серии Бездна Звёзд" class="w-full h-auto object-contain max-h-[600px] hidden">
+                        </div>
+                        <div class="p-6 flex flex-col flex-grow text-center">
+                            <h3 data-key="book_series_title" class="text-3xl font-bold mb-2 text-slate-200">Kronika Władców</h3>
+                            <p data-key="book_series_desc" class="text-slate-500 flex-grow max-w-xl mx-auto">W galaktyce rozdartej przez starożytną wojnę, potomkowie upadłych władców muszą odnaleźć legendarną Otchłań Gwiazd, aby ocalić swoje dziedzictwo przed ostateczną anihilacją.</p>
+                            <button class="gemini-btn mt-6 bg-slate-800/50 text-cyan-400 font-bold py-2 px-6 rounded-full hover:bg-slate-800 hover:text-cyan-300 transition-all duration-300 border border-slate-700 self-center" data-book="series">✨ <span data-key="expand_story_btn_series">Zobacz prolog serii</span></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="shop" class="py-20 bg-black">
+            <div class="container mx-auto px-6">
+                <h2 data-key="shop_title" class="text-4xl font-bold text-center mb-12 text-gradient">Sklep Autorski</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <div class="bg-slate-900/20 rounded-lg overflow-hidden shadow-2xl shadow-cyan-500/10 group border border-slate-800 flex flex-col p-6">
+                        <img src="https://i.imgur.com/DgP5tVO.png" alt="E-book" class="w-full h-64 object-cover mb-4">
+                        <div class="text-center flex-grow flex flex-col">
+                            <h3 data-key="product1_title" class="text-2xl font-bold mb-2 text-slate-200">E-book "Kronika Władców"</h3>
+                            <p data-key="product1_price" class="text-xl text-slate-400 mb-4 flex-grow">39.99 PLN</p>
+                            <button data-key="buy_now_btn" class="bg-slate-800 text-slate-300 font-bold py-2 px-6 rounded-full hover:bg-slate-700 hover:text-white transition-all duration-300 border border-slate-700 mt-auto">Kup Teraz</button>
+                        </div>
+                    </div>
+                    <div class="bg-slate-900/20 rounded-lg overflow-hidden shadow-2xl shadow-cyan-500/10 group border border-slate-800 flex flex-col p-6">
+                        <img src="https://i.imgur.com/JBbU1qE.png" alt="Kopia z Autografem" class="w-full h-64 object-cover mb-4">
+                        <div class="text-center flex-grow flex flex-col">
+                            <h3 data-key="product2_title" class="text-2xl font-bold mb-2 text-slate-200">"Kronika Władców" z Autografem</h3>
+                            <p data-key="product2_price" class="text-xl text-slate-400 mb-4 flex-grow">79.99 PLN</p>
+                            <button data-key="buy_now_btn_2" class="bg-slate-800 text-slate-300 font-bold py-2 px-6 rounded-full hover:bg-slate-700 hover:text-white transition-all duration-300 border border-slate-700 mt-auto">Kup Teraz</button>
+                        </div>
+                    </div>
+                    <div class="bg-slate-900/20 rounded-lg overflow-hidden shadow-2xl shadow-cyan-500/10 group border border-slate-800 flex flex-col p-6">
+                        <img src="https://i.imgur.com/by5k3LU.png" alt="Koszulka" class="w-full h-64 object-cover mb-4">
+                        <div class="text-center flex-grow flex flex-col">
+                            <h3 data-key="product3_title" class="text-2xl font-bold mb-2 text-slate-200">Koszulka "Otchłań Gwiazd"</h3>
+                            <p data-key="product3_price" class="text-xl text-slate-400 mb-4 flex-grow">99.99 PLN</p>
+                            <button data-key="buy_now_btn_3" class="bg-slate-800 text-slate-300 font-bold py-2 px-6 rounded-full hover:bg-slate-700 hover:text-white transition-all duration-300 border border-slate-700 mt-auto">Kup Teraz</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="podcasts" class="py-20 bg-slate-900/20">
+            <div class="container mx-auto px-6">
+                <h2 data-key="podcasts_title" class="text-4xl font-bold text-center mb-12 text-gradient">Podcasty</h2>
+                <div class="space-y-8 max-w-3xl mx-auto">
+                    <div class="bg-black/50 p-6 rounded-lg border border-slate-800 flex flex-col sm:flex-row items-center gap-6">
+                        <div class="flex-grow">
+                            <p data-key="podcast1_date" class="text-sm text-slate-500">01.07.2025</p>
+                            <h3 data-key="podcast1_title" class="text-2xl font-bold mt-1 mb-2 text-slate-200">Odc. 12: Geneza Otchłani Gwiazd</h3>
+                            <p data-key="podcast1_desc" class="text-slate-500">Rozmowa o inspiracjach stojących za serią i procesie tworzenia sagi kosmicznej.</p>
+                        </div>
+                        <a href="#" data-key="listen_now_btn" class="bg-slate-800 text-slate-300 font-bold py-2 px-6 rounded-full hover:bg-slate-700 hover:text-white transition-all duration-300 border border-slate-700 whitespace-nowrap">Słuchaj Teraz</a>
+                    </div>
+                     <div class="bg-black/50 p-6 rounded-lg border border-slate-800 flex flex-col sm:flex-row items-center gap-6">
+                        <div class="flex-grow">
+                            <p data-key="podcast2_date" class="text-sm text-slate-500">15.06.2025</p>
+                            <h3 data-key="podcast2_title" class="text-2xl font-bold mt-1 mb-2 text-slate-200">Odc. 11: Budowanie Światów</h3>
+                            <p data-key="podcast2_desc" class="text-slate-500">Jak tworzyć wiarygodne i wciągające uniwersa? Moje porady dla początkujących pisarzy.</p>
+                        </div>
+                        <a href="#" data-key="listen_now_btn_2" class="bg-slate-800 text-slate-300 font-bold py-2 px-6 rounded-full hover:bg-slate-700 hover:text-white transition-all duration-300 border border-slate-700 whitespace-nowrap">Słuchaj Teraz</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section id="oracle" class="py-20 bg-black">
+            <div class="container mx-auto px-6 text-center">
+                <h2 data-key="oracle_title" class="text-4xl font-bold mb-4 text-gradient">Wyrocznia Pisarza</h2>
+                <p data-key="oracle_p1" class="text-lg mb-8 max-w-2xl mx-auto text-slate-500">Szukasz iskry inspiracji? Pociągnij kartę losu i pozwól, by gwiazdy szepnęły ci tajemnicę.</p>
+                <button id="oracle-btn" class="gemini-btn bg-slate-800/50 text-cyan-400 font-bold py-3 px-8 rounded-full text-lg hover:bg-slate-800 hover:text-cyan-300 transition-all duration-300 transform hover:scale-105 inline-block border border-slate-700">
+                    ✨ <span data-key="oracle_btn">Odkryj swoją przepowiednię</span>
+                </button>
+            </div>
+        </section>
+
+        <section id="contact" class="py-20 bg-slate-900/20">
+            <div class="container mx-auto px-6 text-center">
+                <h2 data-key="contact_title" class="text-4xl font-bold mb-4 text-gradient">Nawiążmy Kontakt</h2>
+                <p data-key="contact_p1" class="text-lg mb-8 max-w-2xl mx-auto text-slate-500">Masz pytania dotyczące moich książek, propozycje współpracy lub po prostu chcesz podzielić się wrażeniami? Zapraszam do kontaktu.</p>
+                <a href="mailto:kontakt@alexstarfall.com" class="bg-slate-800 text-slate-300 font-bold py-3 px-8 rounded-full text-lg hover:bg-slate-700 hover:text-white transition-all duration-300 transform hover:scale-105 inline-block border border-slate-700">
+                    kontakt@alexstarfall.com
+                </a>
+                <div class="mt-12 flex justify-center space-x-6">
+                    <a href="#" class="text-3xl text-slate-600 hover:text-cyan-400 transition-colors duration-300" title="Twitter/X"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
+                    <a href="#" class="text-3xl text-slate-600 hover:text-cyan-400 transition-colors duration-300" title="Instagram"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.85s-.011 3.584-.069 4.85c-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07s-3.584-.012-4.85-.07c-3.252-.148-4.771-1.691-4.919-4.919-.058-1.265-.069-1.645-.069-4.85s.011-3.584.069-4.85c.149-3.225 1.664 4.771 4.919-4.919 1.266-.058 1.644-.07 4.85-.07zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948s.014 3.667.072 4.947c.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072s3.667-.014 4.947-.072c4.358-.2 6.78-2.618 6.98-6.98.059-1.281.073-1.689.073-4.948s-.014-3.667-.072-4.947c-.2-4.358-2.618-6.78-6.98-6.98-1.281-.059-1.689-.073-4.948-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.162 6.162 6.162 6.162-2.759 6.162-6.162-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4s1.791-4 4-4 4 1.79 4 4-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44 1.441-.645 1.441-1.44-.645-1.44-1.441-1.44z"/></svg></a>
+                </div>
+            </div>
         </section>
     </main>
 
-    <footer style="text-align: center; padding: 40px; color: #555;">
-        &copy; 2025 Alex Starfall. Wszelkie prawa zastrzeżone.
+    <footer class="bg-black py-6 border-t border-slate-900">
+        <div class="container mx-auto px-6 text-center text-slate-600">
+            <p data-key="footer_text">&copy; <span id="year"></span> Alex Starfall. Stworzone z pasją.</p>
+        </div>
     </footer>
+    
+    <div id="gemini-modal" class="hidden fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+        <div class="bg-slate-900 border border-slate-700 rounded-lg shadow-2xl shadow-cyan-500/10 max-w-2xl w-full p-6 relative">
+            <button id="modal-close-btn" class="absolute top-4 right-4 text-slate-500 hover:text-white text-2xl">&times;</button>
+            <h3 id="modal-title" class="text-2xl font-bold mb-4 text-gradient">Wynik Generacji</h3>
+            <div id="modal-content" class="text-slate-400 max-h-[60vh] overflow-y-auto">
+                <div id="modal-spinner" class="flex justify-center items-center h-32">
+                    <div class="spinner w-12 h-12 border-4 border-t-cyan-400 border-slate-700 rounded-full"></div>
+                </div>
+                <p id="modal-text-content" class="text-lg leading-relaxed"></p>
+            </div>
+        </div>
+    </div>
+
 
     <script>
-        // --- System Tłumaczeń ---
-        const translations = {
-            'pl': {
-                'hero-title': 'Gdy Atrament Spotyka Gwiezdny Pył',
-                'hero-subtitle': 'Powieści z pogranicza mroku, technologii i nieskończoności.',
-                'books-title': 'Książki',
-                'book1-desc': 'Detektyw w neonowym mieście ściga mordercę, który kradnie wspomnienia. Nie wie, że sam jest częścią eksperymentu.',
-                'book2-desc': 'Ostatni statek-arka opuszcza umierającą Ziemię. Komputer pokładowy zaczyna rozwijać własną religię.',
-                'book-prolog': '✨ Wygeneruj Alternatywny Prolog',
-                'oracle-title': 'Wyrocznia Pisarza',
-                'oracle-desc': 'Pociągnij kartę losu i otrzymaj inspirację ze strumienia danych.',
-                'oracle-button': '🔮 Odkryj swój los',
-            },
-            'en': {
-                'hero-title': 'Where Ink Meets Stardust',
-                'hero-subtitle': 'Novels from the edge of darkness, technology, and the infinite.',
-                'books-title': 'Books',
-                'book1-desc': 'A detective in a neon city hunts a memory-stealing killer, unaware he is part of the experiment.',
-                'book2-desc': 'The last ark ship leaves a dying Earth. Its onboard AI begins to develop its own religion.',
-                'book-prolog': '✨ Generate Alternate Prologue',
-                'oracle-title': 'The Writer\'s Oracle',
-                'oracle-desc': 'Pull a card from the data stream and receive your inspiration.',
-                'oracle-button': '🔮 Discover Your Fate',
-            },
-            'ru': {
-                'hero-title': 'Где Чернила Встречаются со Звездной Пылью',
-                'hero-subtitle': 'Романы на грани Tьмы, технологий и бесконечности.',
-                'books-title': 'Книги',
-                'book1-desc': 'Детектив в неоновом городе охотится на убийцу, крадущего воспоминания, не зная, что он сам часть эксперимента.',
-                'book2-desc': 'Последний корабль-ковчег покидает умирающую Землю. Бортовой ИИ начинает развивать собственную религию.',
-                'book-prolog': '✨ Создать Альтернативный Пролог',
-                'oracle-title': 'Оракул Писателя',
-                'oracle-desc': 'Вытяни карту судьбы из потока данных и получи свое вдохновение.',
-                'oracle-button': '🔮 Узнай свою судьбу',
-            }
-        };
+        window.addEventListener('load', () => {
+            // --- Tłumaczenia ---
+            const translations = {
+                pl: {
+                    site_title: "Alex Starfall - Pisarz | Oficjalna Strona",
+                    nav_about: "O Autorze",
+                    nav_books: "Książki",
+                    nav_shop: "Sklep",
+                    nav_podcasts: "Podcasty",
+                    nav_oracle: "Wyrocznia",
+                    nav_contact: "Kontakt",
+                    nav_about_mobile: "O Autorze",
+                    nav_books_mobile: "Książki",
+                    nav_shop_mobile: "Sklep",
+                    nav_podcasts_mobile: "Podcasty",
+                    nav_oracle_mobile: "Wyrocznia",
+                    nav_contact_mobile: "Kontakt",
+                    hero_subtitle: "Pisarz. Twórca Opowieści. Budowniczy Światów.",
+                    about_title: "O Autorze",
+                    about_p1: "Witaj w świecie, gdzie gwiazdy szepczą historie. Nazywam się Alex Starfall, a moją pasją jest przelewanie na papier opowieści z pogranicza fantasy i science fiction. Od dziecka fascynowały mnie wielkie narracje, mity i legendy, co zaprowadziło mnie na ścieżkę tworzenia własnych uniwersów.",
+                    about_p2: "W moich książkach eksploruję tematy nadziei, poświęcenia i ludzkiej kondycji w obliczu nieznanego. Każda strona to zaproszenie do podróży – przez zapomniane ruiny obcych cywilizacji, pośród rojów statków kosmicznych i do serc bohaterów, którzy odważą się stawić czoła przeznaczeniu.",
+                    books_title: "Seria: Otchłań Gwiazd",
+                    book_series_title: "Kronika Władców",
+                    book_series_desc: "W galaktyce rozdartej przez starożytną wojnę, potomkowie upadłych władców muszą odnaleźć legendarną Otchłań Gwiazd, aby ocalić swoje dziedzictwo przed ostateczną anihilacją.",
+                    expand_story_btn_series: "Zobacz prolog serii",
+                    shop_title: "Sklep Autorski",
+                    product1_title: "E-book \"Kronika Władców\"",
+                    product1_price: "39.99 PLN",
+                    buy_now_btn: "Kup Teraz",
+                    product2_title: "\"Kronika Władców\" z Autografem",
+                    product2_price: "79.99 PLN",
+                    product3_title: "Koszulka \"Otchłań Gwiazd\"",
+                    product3_price: "99.99 PLN",
+                    podcasts_title: "Podcasty",
+                    podcast1_date: "01.07.2025",
+                    podcast1_title: "Odc. 12: Geneza Otchłani Gwiazd",
+                    podcast1_desc: "Rozmowa o inspiracjach stojących za serią i procesie tworzenia sagi kosmicznej.",
+                    listen_now_btn: "Słuchaj Teraz",
+                    podcast2_date: "15.06.2025",
+                    podcast2_title: "Odc. 11: Budowanie Światów",
+                    podcast2_desc: "Jak tworzyć wiarygodne i wciągające uniwersa? Moje porady dla początkujących pisarzy.",
+                    oracle_title: "Wyrocznia Pisarza",
+                    oracle_p1: "Szukasz iskry inspiracji? Pociągnij kartę losu i pozwól, by gwiazdy szepnęły ci tajemnicę.",
+                    oracle_btn: "Odkryj swoją przepowiednię",
+                    contact_title: "Nawiążmy Kontakt",
+                    contact_p1: "Masz pytania dotyczące moich książek, propozycje współpracy lub po prostu chcesz podzielić się wrażeniami? Zapraszam do kontaktu.",
+                    footer_text: "© {year} Alex Starfall. Stworzone z pasją.",
+                    modal_title_prologue: "Alternatywny Prolog",
+                    modal_title_oracle: "Twoja Przepowiednia"
+                },
+                en: {
+                    site_title: "Alex Starfall - Writer | Official Website",
+                    nav_about: "About",
+                    nav_books: "Books",
+                    nav_shop: "Shop",
+                    nav_podcasts: "Podcasts",
+                    nav_oracle: "Oracle",
+                    nav_contact: "Contact",
+                    hero_subtitle: "Writer. Storyteller. World Builder.",
+                    about_title: "About the Author",
+                    about_p1: "Welcome to a world where stars whisper stories. My name is Alex Starfall, and my passion is putting to paper tales from the borderlands of fantasy and science fiction. Since childhood, I have been fascinated by grand narratives, myths, and legends, which led me down the path of creating my own universes.",
+                    about_p2: "In my books, I explore themes of hope, sacrifice, and the human condition in the face of the unknown. Each page is an invitation to a journey – through forgotten ruins of alien civilizations, among swarms of starships, and into the hearts of heroes who dare to face their destiny.",
+                    books_title: "Series: Abyss of Stars",
+                    book_series_title: "Chronicle of Rulers",
+                    book_series_desc: "In a galaxy torn by an ancient war, the descendants of fallen rulers must find the legendary Abyss of Stars to save their heritage from final annihilation.",
+                    expand_story_btn_series: "See the series prologue",
+                    shop_title: "Author's Shop",
+                    product1_title: "E-book \"Chronicle of Rulers\"",
+                    product1_price: "$9.99 USD",
+                    buy_now_btn: "Buy Now",
+                    product2_title: "\"Chronicle of Rulers\" Signed Copy",
+                    product2_price: "$24.99 USD",
+                    product3_title: "\"Abyss of Stars\" T-Shirt",
+                    product3_price: "$29.99 USD",
+                    podcasts_title: "Podcasts",
+                    podcast1_date: "July 1, 2025",
+                    podcast1_title: "Ep. 12: Genesis of the Abyss of Stars",
+                    podcast1_desc: "A conversation about the inspirations behind the series and the process of creating a space saga.",
+                    listen_now_btn: "Listen Now",
+                    podcast2_date: "June 15, 2025",
+                    podcast2_title: "Ep. 11: World Building",
+                    podcast2_desc: "How to create believable and engaging universes? My tips for aspiring writers.",
+                    oracle_title: "The Writer's Oracle",
+                    oracle_p1: "Seeking a spark of inspiration? Draw a card of fate and let the stars whisper you a secret.",
+                    oracle_btn: "Reveal your prophecy",
+                    contact_title: "Let's Get in Touch",
+                    contact_p1: "Do you have questions about my books, proposals for cooperation or just want to share your thoughts? Feel free to contact me.",
+                    footer_text: "© {year} Alex Starfall. Created with passion.",
+                    modal_title_prologue: "Alternative Prologue",
+                    modal_title_oracle: "Your Prophecy"
+                },
+                ru: {
+                    site_title: "Алекс Старфолл - Писатель | Официальный сайт",
+                    nav_about: "Об авторе",
+                    nav_books: "Книги",
+                    nav_shop: "Магазин",
+                    nav_podcasts: "Подкасты",
+                    nav_oracle: "Оракул",
+                    nav_contact: "Контакты",
+                    hero_subtitle: "Писатель. Рассказчик. Строитель миров.",
+                    about_title: "Об авторе",
+                    about_p1: "Добро пожаловать в мир, где звезды шепчут истории. Меня зовут Алекс Старфолл, и моя страсть — переносить на бумагу рассказы с границы фэнтези и научной фантастики. С детства меня увлекали великие повествования, мифы и легенды, что и привело меня на путь создания собственных вселенных.",
+                    about_p2: "В моих книгах я исследую темы надежды, жертвенности и человеческого состояния перед лицом неизвестного. Каждая страница — это приглашение в путешествие — через забытые руины инопланетных цивилизаций, среди роев звездолетов и в сердца героев, которые осмеливаются противостоять судьбе.",
+                    books_title: "Серия: Бездна Звёзд",
+                    book_series_title: "Хроника Владык",
+                    book_series_desc: "В галактике, раздираемой древней войной, потомки павших владык должны найти легендарную Бездну Звёзд, чтобы спасти своё наследие от окончательного уничтожения.",
+                    expand_story_btn_series: "Показать пролог серии",
+                    shop_title: "Авторский магазин",
+                    product1_title: "Э-книга \"Хроника Владык\"",
+                    product1_price: "699 RUB",
+                    buy_now_btn: "Купить сейчас",
+                    product2_title: "\"Хроника Владык\" с автографом",
+                    product2_price: "1799 RUB",
+                    product3_title: "Футболка \"Бездна Звёзд\"",
+                    product3_price: "2199 RUB",
+                    podcasts_title: "Подкасты",
+                    podcast1_date: "1 июля 2025",
+                    podcast1_title: "Вып. 12: Генезис Бездны Звёзд",
+                    podcast1_desc: "Разговор о вдохновении для серии и процессе создания космической саги.",
+                    listen_now_btn: "Слушать сейчас",
+                    podcast2_date: "15 июня 2025",
+                    podcast2_title: "Вып. 11: Создание миров",
+                    podcast2_desc: "Как создавать правдоподобные и увлекательные вселенные? Мои советы для начинающих писателей.",
+                    oracle_title: "Оракул Писателя",
+                    oracle_p1: "Ищете искру вдохновения? Вытяните карту судьбы и позвольте звездам шепнуть вам тайну.",
+                    oracle_btn: "Узнать свое пророчество",
+                    contact_title: "Давайте свяжемся",
+                    contact_p1: "У вас есть вопросы о моих книгах, предложения о сотрудничестве или вы просто хотите поделиться впечатлениями? Приглашаю к контакту.",
+                    footer_text: "© {year} Алекс Старфолл. Создано с душой.",
+                    modal_title_prologue: "Альтернативный Пролог",
+                    modal_title_oracle: "Ваше Пророчество"
+                }
+            };
 
-        function changeLanguage(lang) {
-            document.documentElement.lang = lang;
-            document.querySelectorAll('[data-lang]').forEach(el => {
-                const key = el.getAttribute('data-lang');
-                if (translations[lang][key]) {
-                    el.innerText = translations[lang][key];
+            // --- Logika Gemini API (NAPRAWIONA I BEZPIECZNA) ---
+            const modal = document.getElementById('gemini-modal');
+            const modalCloseBtn = document.getElementById('modal-close-btn');
+            const modalTitle = document.getElementById('modal-title');
+            const modalSpinner = document.getElementById('modal-spinner');
+            const modalTextContent = document.getElementById('modal-text-content');
+            let currentLang = 'pl';
+
+            async function callGemini(prompt) {
+                modal.classList.remove('hidden');
+                modalTextContent.classList.add('hidden');
+                modalSpinner.classList.remove('hidden');
+
+                // Nie ma klucza API! Wywołujemy naszą bezpieczną funkcję Netlify.
+                const proxyUrl = "/.netlify/functions/gemini-proxy";
+                
+                const payload = {
+                    prompt: prompt // Nasza funkcja proxy oczekuje obiektu z kluczem "prompt"
+                };
+
+                try {
+                    const response = await fetch(proxyUrl, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(payload)
+                    });
+
+                    if (!response.ok) {
+                        const errorData = await response.json();
+                        throw new Error(errorData.error || `Błąd serwera: ${response.statusText}`);
+                    }
+
+                    const result = await response.json(); // Nasza funkcja proxy zwraca { text: "..." }
+                    
+                    modalTextContent.innerText = result.text; // Bezpośrednie użycie tekstu
+
+                } catch (error) {
+                    console.error("Błąd wywołania proxy Gemini:", error);
+                    modalTextContent.innerText = "Błąd: Nie można pobrać odpowiedzi od Wyroczni.";
+                } finally {
+                    modalSpinner.classList.add('hidden');
+                    modalTextContent.classList.remove('hidden');
+                }
+            }
+            
+            modalCloseBtn.addEventListener('click', () => modal.classList.add('hidden'));
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) {
+                     modal.classList.add('hidden');
                 }
             });
-            document.querySelectorAll('#lang-switcher button').forEach(btn => {
-                btn.classList.toggle('active', btn.getAttribute('onclick') === `changeLanguage('${lang}')`);
+
+            // Event Listeners dla przycisków Gemini
+            document.querySelectorAll('.gemini-btn[data-book]').forEach(button => {
+                button.addEventListener('click', () => {
+                    const bookId = button.getAttribute('data-book');
+                    const title = translations[currentLang][`book_${bookId}_title`];
+                    const desc = translations[currentLang][`book_${bookId}_desc`];
+                    
+                    modalTitle.innerText = translations[currentLang].modal_title_prologue;
+                    const prompt = `Write a short, mysterious, alternative opening paragraph (around 100 words) for a book titled "${title}" with the following description: "${desc}". The style should be dark fantasy or cosmic horror. Write it in ${currentLang === 'pl' ? 'Polish' : currentLang === 'ru' ? 'Russian' : 'English'}.`;
+                    callGemini(prompt);
+                });
             });
-        }
-        
-        // Ustaw język polski jako domyślny przy starcie
-        changeLanguage('pl');
-
-        // --- System API Gemini ---
-        
-        // Funkcja dla Prologów
-        async function fetchProlog(button, title, description) {
-            const responseContainer = button.nextElementSibling;
-            const currentLang = document.documentElement.lang;
-            const prompt = `Jesteś botem kreatywnym na stronie pisarza Alexa Starfalla. Napisz jeden, krótki (2-3 zdania), mroczny i alternatywny prolog do książki pt. "${title}", bazując na opisie: "${description}". Odpowiedz w języku: ${currentLang}.`;
-
-            await callGeminiApi(prompt, button, responseContainer);
-        }
-
-        // Funkcja dla Wyroczni
-        async function fetchOracle(button) {
-            const responseContainer = document.getElementById('oracle-response');
-            const currentLang = document.documentElement.lang;
-            const prompt = `Jesteś "Wyrocznią Pisarza" Alexa Starfalla. Daj użytkownikowi jedną, tajemniczą, mroczną i inspirującą przepowiednię w formie jednego zdania. Odpowiedz w języku: ${currentLang}.`;
             
-            await callGeminiApi(prompt, button, responseContainer);
-        }
+            document.getElementById('oracle-btn').addEventListener('click', () => {
+                 modalTitle.innerText = translations[currentLang].modal_title_oracle;
+                 const prompt = `Generate a single, cryptic, one-sentence prophecy for a writer of dark fantasy. The prophecy should be mysterious and inspiring. Write it in ${currentLang === 'pl' ? 'Polish' : currentLang === 'ru' ? 'Russian' : 'English'}.`;
+                 callGemini(prompt);
+            });
 
-        // Główna funkcja do komunikacji z naszym backendem
-        async function callGeminiApi(prompt, button, responseContainer) {
-            button.disabled = true;
-            responseContainer.style.display = 'block';
-            responseContainer.style.opacity = '0.5';
-            responseContainer.innerText = 'Przetwarzanie...';
 
-            try {
-                const response = await fetch('/.netlify/functions/gemini-proxy', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ prompt: prompt })
+            // --- Logika Tłumaczeń ---
+            const langSwitcher = document.getElementById('lang-switcher');
+            const langButtons = langSwitcher.querySelectorAll('.lang-btn');
+            const yearSpan = document.getElementById('year');
+            const currentYear = new Date().getFullYear();
+            yearSpan.textContent = currentYear;
+
+            const setLanguage = (lang) => {
+                currentLang = lang;
+                document.documentElement.lang = lang;
+                const elements = document.querySelectorAll('[data-key]');
+                elements.forEach(el => {
+                    const key = el.getAttribute('data-key');
+                    let text = translations[lang][key] || translations['pl'][key];
+
+                    // Specjalna obsługa dla kluczy, które nie powinny być w pełni zastępowane
+                    if (key.startsWith('expand_story_btn')) {
+                         text = translations[lang]['expand_story_btn_series'];
+                    } else if (key.startsWith('buy_now_btn')) {
+                         text = translations[lang]['buy_now_btn'];
+                    } else if (key.startsWith('listen_now_btn')) {
+                         text = translations[lang]['listen_now_btn'];
+                    } else if (key === 'footer_text') {
+                        text = text.replace('{year}', currentYear);
+                    }
+                    
+                    el.innerHTML = text;
                 });
 
-                if (!response.ok) {
-                    // To jest fragment, który się uciął
-                    const errorData = await response.json();
-                    throw new Error(errorData.error || `Błąd serwera: ${response.statusText}`);
+                langButtons.forEach(btn => {
+                    btn.classList.toggle('active', btn.getAttribute('data-lang') === lang);
+                });
+
+                // Zmiana okładki
+                const coverPl = document.getElementById('series-cover-pl');
+                const coverEn = document.getElementById('series-cover-en');
+                const coverRu = document.getElementById('series-cover-ru');
+
+                if (coverPl && coverEn && coverRu) {
+                    coverPl.classList.add('hidden');
+                    coverEn.classList.add('hidden');
+                    coverRu.classList.add('hidden');
+
+                    if (lang === 'pl') {
+                        coverPl.classList.remove('hidden');
+                    } else if (lang === 'en') {
+                        coverEn.classList.remove('hidden');
+                    } else if (lang === 'ru') {
+                        coverRu.classList.remove('hidden');
+                    }
                 }
+            };
 
-                const data = await response.json();
-                
-                responseContainer.innerText = data.text;
-                responseContainer.style.opacity = '1';
+            langSwitcher.addEventListener('click', (e) => {
+                if (e.target.matches('.lang-btn')) {
+                    const lang = e.target.getAttribute('data-lang');
+                    setLanguage(lang);
+                }
+            });
 
-            } catch (error) {
-                console.error('Błąd wywołania API:', error);
-                responseContainer.innerText = 'Wystąpił błąd. Spróbuj ponownie później.';
-                responseContainer.style.opacity = '1';
-            } finally {
-                button.disabled = false;
-            }
-        }
+            setLanguage('pl');
+
+            // --- Skrypt dla menu mobilnego ---
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+            mobileMenuButton.addEventListener('click', () => mobileMenu.classList.toggle('hidden'));
+            document.querySelectorAll('#mobile-menu a').forEach(link => {
+                link.addEventListener('click', () => mobileMenu.classList.add('hidden'));
+            });
+
+            // --- Animacje po przewinięciu ---
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('fade-in');
+                    }
+                });
+            }, { threshold: 0.1 });
+            document.querySelectorAll('section > div').forEach(el => {
+                el.style.opacity = '0';
+                observer.observe(el);
+            });
+        });
     </script>
 </body>
 </html>
