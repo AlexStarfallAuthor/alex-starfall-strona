@@ -11,9 +11,8 @@
     <style>
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #05050a;
+            /* Usunięty background-color, teraz kontroluje go #stars-container */
         }
-        /* Opcja 1: Głęboki Kosmiczny Błękit */
         .text-gradient {
             background: linear-gradient(90deg, #6d28d9, #22d3ee);
             -webkit-background-clip: text;
@@ -38,27 +37,78 @@
             color: #fff;
             background-color: #6d28d9;
         }
-        /* Style dla przycisku Gemini i modala */
-        .gemini-btn {
-            box-shadow: 0 0 15px rgba(34, 211, 238, 0.2);
-        }
-        .gemini-btn:hover {
-            box-shadow: 0 0 25px rgba(34, 211, 238, 0.4);
-        }
         #gemini-modal.hidden {
             display: none;
         }
-        /* Animacja dla spinnera */
         @keyframes spin {
             to { transform: rotate(360deg); }
         }
         .spinner {
             animation: spin 1s linear infinite;
         }
+
+        /* ----- SEKCJA DLA MIENIĄCYCH SIĘ GWIAZD (NOWY KOD) ----- */
+        .stars-bg {
+          position: fixed; /* Stała pozycja, nie scrolluje się */
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          z-index: -10; /* Kładzie go POD całą treścią */
+          background: #05050a; /* Nasz główny kolor tła */
+          overflow: hidden; /* Ukryj gwiazdy, które wylatują poza ekran */
+        }
+        
+        /* Animacja migotania */
+        @keyframes twinkle {
+          0%   { opacity: 0.3; }
+          50%  { opacity: 0.8; }
+          100% { opacity: 0.3; }
+        }
+        
+        /* Definicja warstw gwiazd */
+        #stars, #stars2, #stars3 {
+          position: absolute;
+          left: 0;
+          top: 0;
+          width: 1px; /* Używamy 1px x 1px div i box-shadow */
+          height: 1px;
+          background: transparent;
+          animation-name: twinkle;
+          animation-timing-function: ease-in-out;
+          animation-iteration-count: infinite;
+        }
+
+        /* Warstwa 1: 100 małych gwiazd, migotanie co 5s */
+        #stars {
+          animation-duration: 5s;
+          box-shadow: 10vw 20vh #fff, 20vw 80vh #fff, 30vw 30vh #fff, 40vw 90vh #fff, 50vw 10vh #fff, 60vw 60vh #fff, 70vw 25vh #fff, 80vw 75vh #fff, 90vw 50vh #fff, 5vw 95vh #fff, 15vw 10vh #fff, 25vw 70vh #fff, 35vw 40vh #fff, 45vw 85vh #fff, 55vw 20vh #fff, 65vw 70vh #fff, 75vw 15vh #fff, 85vw 90vh #fff, 95vw 30vh #fff, 12vw 45vh #fff, 22vw 95vh #fff, 32vw 10vh #fff, 42vw 60vh #fff, 52vw 30vh #fff, 62vw 80vh #fff, 72vw 50vh #fff, 82vw 20vh #fff, 92vw 70vh #fff, 8vw 15vh #fff, 18vw 65vh #fff, 28vw 35vh #fff, 38vw 85vh #fff, 48vw 25vh #fff, 58vw 75vh #fff, 68vw 45vh #fff, 78vw 5vh #fff, 88vw 55vh #fff, 98vw 85vh #fff, 3vw 30vh #fff, 13vw 80vh #fff, 23vw 20vh #fff, 33vw 70vh #fff, 43vw 10vh #fff, 53vw 60vh #fff, 63vw 30vh #fff, 73vw 90vh #fff, 83vw 40vh #fff, 93vw 15vh #fff, 6vw 55vh #fff, 16vw 25vh #fff, 26vw 75vh #fff, 36vw 5vh #fff, 46vw 55vh #fff, 56vw 15vh #fff, 66vw 65vh #fff, 76vw 35vh #fff, 86vw 85vh #fff, 96vw 45vh #fff;
+        }
+
+        /* Warstwa 2: 50 średnich gwiazd, migotanie co 7s (dla losowości) */
+        #stars2 {
+          animation-duration: 7s;
+          animation-delay: 1s; /* Opóźnienie, żeby nie migotały razem */
+          box-shadow: 15vw 25vh #fff, 25vw 75vh #fff, 35vw 15vh #fff, 45vw 65vh #fff, 55vw 5vh #fff, 65vw 85vh #fff, 75vw 35vh #fff, 85vw 95vh #fff, 95vw 55vh #fff, 5vw 45vh #fff, 10vw 70vh #fff, 20vw 30vh #fff, 30vw 90vh #fff, 40vw 20vh #fff, 50vw 70vh #fff, 60vw 10vh #fff, 70vw 50vh #fff, 80vw 80vh #fff, 90vw 20vh #fff, 3vw 90vh #fff, 13vw 40vh #fff, 23vw 80vh #fff, 33vw 30vh #fff, 43vw 70vh #fff, 53vw 20vh #fff, 63vw 90vh #fff, 73vw 40vh #fff, 83vw 70vh #fff, 93vw 10vh #fff, 8vw 60vh #fff, 18vw 20vh #fff, 28vw 70vh #fff, 38vw 40vh #fff, 48vw 90vh #fff, 58vw 30vh #fff, 68vw 80vh #fff, 78vw 20vh #fff, 88vw 60vh #fff, 98vw 30vh #fff;
+        }
+        
+        /* Warstwa 3: 20 dużych gwiazd (scale 1.5), migotanie co 10s */
+        #stars3 {
+          animation-duration: 10s;
+          animation-delay: 2s;
+          box-shadow: 10vw 10vh #fff, 20vw 30vh #fff, 30vw 50vh #fff, 40vw 70vh #fff, 50vw 90vh #fff, 60vw 20vh #fff, 70vw 40vh #fff, 80vw 60vh #fff, 90vw 80vh #fff, 5vw 50vh #fff, 15vw 70vh #fff, 25vw 10vh #fff, 35vw 30vh #fff, 45vw 50vh #fff, 55vw 70vh #fff, 65vw 90vh #fff, 75vw 20vh #fff, 85vw 40vh #fff, 95vw 60vh #fff, 2vw 80vh #fff;
+        }
+        /* ----- KONIEC SEKCJI GWIAZD ----- */
+
     </style>
 </head>
 <body class="text-slate-300">
 
+    <div class="stars-bg">
+        <div id="stars"></div>
+        <div id="stars2"></div>
+        <div id="stars3"></div>
+    </div>
     <header class="bg-black/80 backdrop-blur-sm fixed top-0 left-0 right-0 z-50 shadow-lg shadow-cyan-500/10">
         <div class="container mx-auto px-6 py-4 flex justify-between items-center">
             <a href="#hero" class="text-xl lg:text-2xl font-bold tracking-wider text-gradient">
@@ -133,8 +183,7 @@
                         <div class="p-6 flex flex-col flex-grow text-center">
                             <h3 data-key="book_series_title" class="text-3xl font-bold mb-2 text-slate-200">Kronika Władców</h3>
                             <p data-key="book_series_desc" class="text-slate-500 flex-grow max-w-xl mx-auto">W galaktyce rozdartej przez starożytną wojnę, potomkowie upadłych władców muszą odnaleźć legendarną Otchłań Gwiazd, aby ocalić swoje dziedzictwo przed ostateczną anihilacją.</p>
-                            <button class="gemini-btn mt-6 bg-slate-800/50 text-cyan-400 font-bold py-2 px-6 rounded-full hover:bg-slate-800 hover:text-cyan-300 transition-all duration-300 border border-slate-700 self-center" data-book="series">✨ <span data-key="expand_story_btn_series">Zobacz prolog serii</span></button>
-                        </div>
+                            </div>
                     </div>
                 </div>
             </div>
@@ -188,7 +237,7 @@
                         <div class="flex-grow">
                             <p data-key="podcast2_date" class="text-sm text-slate-500">15.06.2025</p>
                             <h3 data-key="podcast2_title" class="text-2xl font-bold mt-1 mb-2 text-slate-200">Odc. 11: Budowanie Światów</h3>
-                            <p data-key="podcast2_desc" class="text-slate-500">Jak tworzyć wiarygodne i wciągające uniwersa? Moje porady dla początkujących pisarzy.</p>
+                            <p data-key="podcast2_desc" class="text-slate-500">Jak tworzyć wiarygodne i wciągające uniwersa? Moje porady dla początujących pisarzy.</p>
                         </div>
                         <a href="#" data-key="listen_now_btn_2" class="bg-slate-800 text-slate-300 font-bold py-2 px-6 rounded-full hover:bg-slate-700 hover:text-white transition-all duration-300 border border-slate-700 whitespace-nowrap">Słuchaj Teraz</a>
                     </div>
@@ -200,10 +249,7 @@
             <div class="container mx-auto px-6 text-center">
                 <h2 data-key="oracle_title" class="text-4xl font-bold mb-4 text-gradient">Wyrocznia Pisarza</h2>
                 <p data-key="oracle_p1" class="text-lg mb-8 max-w-2xl mx-auto text-slate-500">Szukasz iskry inspiracji? Pociągnij kartę losu i pozwól, by gwiazdy szepnęły ci tajemnicę.</p>
-                <button id="oracle-btn" class="gemini-btn bg-slate-800/50 text-cyan-400 font-bold py-3 px-8 rounded-full text-lg hover:bg-slate-800 hover:text-cyan-300 transition-all duration-300 transform hover:scale-105 inline-block border border-slate-700">
-                    ✨ <span data-key="oracle_btn">Odkryj swoją przepowiednię</span>
-                </button>
-            </div>
+                </div>
         </section>
 
         <section id="contact" class="py-20 bg-slate-900/20">
@@ -282,7 +328,7 @@
                     listen_now_btn: "Słuchaj Teraz",
                     podcast2_date: "15.06.2025",
                     podcast2_title: "Odc. 11: Budowanie Światów",
-                    podcast2_desc: "Jak tworzyć wiarygodne i wciągające uniwersa? Moje porady dla początkujących pisarzy.",
+                    podcast2_desc: "Jak tworzyć wiarygodne i wciągające uniwersa? Moje porady dla początujących pisarzy.",
                     oracle_title: "Wyrocznia Pisarza",
                     oracle_p1: "Szukasz iskry inspiracji? Pociągnij kartę losu i pozwól, by gwiazdy szepnęły ci tajemnicę.",
                     oracle_btn: "Odkryj swoją przepowiednię",
@@ -376,84 +422,13 @@
                 }
             };
 
-            // --- Logika Gemini API (NAPRAWIONA I BEZPIECZNA) ---
-            const modal = document.getElementById('gemini-modal');
-            const modalCloseBtn = document.getElementById('modal-close-btn');
-            const modalTitle = document.getElementById('modal-title');
-            const modalSpinner = document.getElementById('modal-spinner');
-            const modalTextContent = document.getElementById('modal-text-content');
-            let currentLang = 'pl';
-
-            async function callGemini(prompt) {
-                modal.classList.remove('hidden');
-                modalTextContent.classList.add('hidden');
-                modalSpinner.classList.remove('hidden');
-
-                // Nie ma klucza API! Wywołujemy naszą bezpieczną funkcję Netlify.
-                const proxyUrl = "/.netlify/functions/gemini-proxy";
-                
-                const payload = {
-                    prompt: prompt // Nasza funkcja proxy oczekuje obiektu z kluczem "prompt"
-                };
-
-                try {
-                    const response = await fetch(proxyUrl, {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify(payload)
-                    });
-
-                    if (!response.ok) {
-                        const errorData = await response.json();
-                        throw new Error(errorData.error || `Błąd serwera: ${response.statusText}`);
-                    }
-
-                    const result = await response.json(); // Nasza funkcja proxy zwraca { text: "..." }
-                    
-                    modalTextContent.innerText = result.text; // Bezpośrednie użycie tekstu
-
-                } catch (error) {
-                    console.error("Błąd wywołania proxy Gemini:", error);
-                    modalTextContent.innerText = "Błąd: Nie można pobrać odpowiedzi od Wyroczni.";
-                } finally {
-                    modalSpinner.classList.add('hidden');
-                    modalTextContent.classList.remove('hidden');
-                }
-            }
-            
-            modalCloseBtn.addEventListener('click', () => modal.classList.add('hidden'));
-            modal.addEventListener('click', (e) => {
-                if (e.target === modal) {
-                     modal.classList.add('hidden');
-                }
-            });
-
-            // Event Listeners dla przycisków Gemini
-            document.querySelectorAll('.gemini-btn[data-book]').forEach(button => {
-                button.addEventListener('click', () => {
-                    const bookId = button.getAttribute('data-book');
-                    const title = translations[currentLang][`book_${bookId}_title`];
-                    const desc = translations[currentLang][`book_${bookId}_desc`];
-                    
-                    modalTitle.innerText = translations[currentLang].modal_title_prologue;
-                    const prompt = `Write a short, mysterious, alternative opening paragraph (around 100 words) for a book titled "${title}" with the following description: "${desc}". The style should be dark fantasy or cosmic horror. Write it in ${currentLang === 'pl' ? 'Polish' : currentLang === 'ru' ? 'Russian' : 'English'}.`;
-                    callGemini(prompt);
-                });
-            });
-            
-            document.getElementById('oracle-btn').addEventListener('click', () => {
-                 modalTitle.innerText = translations[currentLang].modal_title_oracle;
-                 const prompt = `Generate a single, cryptic, one-sentence prophecy for a writer of dark fantasy. The prophecy should be mysterious and inspiring. Write it in ${currentLang === 'pl' ? 'Polish' : currentLang === 'ru' ? 'Russian' : 'English'}.`;
-                 callGemini(prompt);
-            });
-
-
             // --- Logika Tłumaczeń ---
             const langSwitcher = document.getElementById('lang-switcher');
             const langButtons = langSwitcher.querySelectorAll('.lang-btn');
             const yearSpan = document.getElementById('year');
             const currentYear = new Date().getFullYear();
             yearSpan.textContent = currentYear;
+            let currentLang = 'pl';
 
             const setLanguage = (lang) => {
                 currentLang = lang;
@@ -462,19 +437,23 @@
                 elements.forEach(el => {
                     const key = el.getAttribute('data-key');
                     let text = translations[lang][key] || translations['pl'][key];
-
-                    // Specjalna obsługa dla kluczy, które nie powinny być w pełni zastępowane
-                    if (key.startsWith('expand_story_btn')) {
-                         text = translations[lang]['expand_story_btn_series'];
-                    } else if (key.startsWith('buy_now_btn')) {
-                         text = translations[lang]['buy_now_btn'];
-                    } else if (key.startsWith('listen_now_btn')) {
-                         text = translations[lang]['listen_now_btn'];
-                    } else if (key === 'footer_text') {
+                    
+                    if (key === 'footer_text') {
                         text = text.replace('{year}', currentYear);
                     }
                     
-                    el.innerHTML = text;
+                    // Bezpieczne przypisanie tekstu, unikając błędów z 'innerHTML' na przyciskach
+                    if (el.tagName === 'SPAN' || el.tagName === 'P' || el.tagName === 'H1' || el.tagName === 'H2' || el.tagName === 'H3' || el.tagName === 'A' || el.tagName === 'TITLE') {
+                        el.innerHTML = text;
+                    } else if (el.tagName === 'BUTTON') {
+                        // Szukamy tekstu wewnątrz przycisku, unikając nadpisania ikony
+                        const textNode = Array.from(el.childNodes).find(node => node.nodeType === Node.TEXT_NODE || node.tagName === 'SPAN');
+                        if (textNode) {
+                            textNode.textContent = text;
+                        } else {
+                            el.innerHTML = text; // Fallback
+                        }
+                    }
                 });
 
                 langButtons.forEach(btn => {
@@ -530,6 +509,18 @@
                 el.style.opacity = '0';
                 observer.observe(el);
             });
+            
+            // --- Logika API (jest teraz pusta, bo przyciski są usunięte) ---
+            const modal = document.getElementById('gemini-modal');
+            const modalCloseBtn = document.getElementById('modal-close-btn');
+            if(modal && modalCloseBtn) {
+                modalCloseBtn.addEventListener('click', () => modal.classList.add('hidden'));
+                modal.addEventListener('click', (e) => {
+                    if (e.target === modal) {
+                         modal.classList.add('hidden');
+                    }
+                });
+            }
         });
     </script>
 </body>
