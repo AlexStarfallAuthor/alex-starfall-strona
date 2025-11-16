@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alex Starfall - Oficjalna Strona</title>
+    <style>
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            margin: 0;
+            background-color: #0c0a14;
+            color: #e0e0e0;
+            line-height: 1.6;
+            background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAiIGhlaWdodD0iMTAwIiB2aWV3Qm94PSIwIDAgMTAwIDEwMCI+PGcgZmlsbD0iIzEzMTExOCIgZmlsbC1vcGFjaXR5PSIwLjciPjxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIxIiBoZWlnaHQ9IjEiLz48cmVjdCB4PSIyMCIgeT0iMzAiIHdpZHRoPSIxIiBoZWlnaHQ9IjEiLz48cmVjdCB4PSI0MCIgeT0iNzAiIHdpZHRoPSIxIiBoZWlnaHQ9IjEiLz48cmVjdCB4PSI4MCIgeT0iMjAiIHdpZHRoPSIxIiBoZWlnaHQ9IjEiLz48cmVjdCB4PSI1MCIgeT0iNTAiIHdpZHRoPSIxIiBoZWlnaHQ9IjEiLz48cmVjdCB4PSI5MCIgeT0iOTUiIHdpZHRoPSIxIiBoZWlnaHQ9IjEiLz48cmVjdCB4PSI3MCIgeT0iMCIgd2lkdGg9IjEiIGhlaWdodD0iMSIvPjwvZz48L3N2Zz4=');
+        }
+        .container { max-width: 900px; margin: 0 auto; padding: 0 20px; }
+        h1, h2, h3 { font-weight: 300; letter-spacing: 1px; }
+        .text-gradient {
+            background: linear-gradient(90deg, #9f55ff, #00aaff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-fill-color: transparent;
+        }
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+            border-bottom: 1px solid #2a2a3a;
+        }
+        #logo { font-size: 1.5rem; font-weight: 600; text-decoration: none; color: #fff; }
+        #lang-switcher button {
+            background: none; border: 1px solid #555; color: #aaa; padding: 5px 10px; margin-left: 5px; cursor: pointer; transition: all 0.3s ease;
+        }
+        #lang-switcher button:hover, #lang-switcher button.active { background-color: #00aaff; color: #fff; border-color: #00aaff; }
+        section { padding: 60px 0; text-align: center; }
+        .book { background-color: #1a1a2a; padding: 20px; border-radius: 8px; margin-bottom: 30px; text-align: left; }
+        .book-cover { width: 100%; height: 300px; background-color: #333; border-radius: 5px; margin-bottom: 15px; }
+        .gemini-button {
+            background: linear-gradient(90deg, #9f55ff, #00aaff);
+            border: none;
+            color: white;
+            padding: 10px 15px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+        }
+        .gemini-button:hover { box-shadow: 0 0 15px rgba(0, 170, 255, 0.5); }
+        .gemini-button:disabled { background: #555; cursor: not-allowed; }
+        .api-response {
+            background-color: #111;
+            border-left: 3px solid #00aaff;
+            padding: 15px;
+            margin-top: 15px;
+            text-align: left;
+            font-style: italic;
+            border-radius: 4px;
+            white-space: pre-wrap;
+            opacity: 0;
+            transition: opacity 0.5s;
+        }
+        #oracle .api-response { text-align: center; font-size: 1.2rem; }
+    </style>
+</head>
+<body>
+
+    <header class="container">
+        <a href="#" id="logo">ALEX STARFALL</a>
+        <nav id="lang-switcher">
+            <button onclick="changeLanguage('pl')" class="active" title="Polski">PL</button>
+            <button onclick="changeLanguage('en')" title="English">EN</button>
+            <button onclick="changeLanguage('ru')" title="Русский">RU</button>
+        </nav>
+    </header>
+
+    <main>
+        <section id="hero" class="container">
+            <h1 class="text-gradient" data-lang="hero-title" style="font-size: 3rem;">Gdy Atrament Spotyka Gwiezdny Pył</h1>
+            <p data-lang="hero-subtitle" style="font-size: 1.2rem; color: #aaa;">Powieści z pogranicza mroku, technologii i nieskończoności.</p>
+        </section>
+
+        <section id="books" class="container">
+            <h2 class="text-gradient" data-lang="books-title">Książki</h2>
+            
+            <div class="book">
+                <div class="book-cover" style="background-image: url('https://via.placeholder.com/600x900.png?text=Okładka+Książki+1'); background-size: cover;"></div>
+                <h3>Echo Pustki</h3>
+                <p data-lang="book1-desc">Detektyw w neonowym mieście ściga mordercę, który kradnie wspomnienia. Nie wie, że sam jest częścią eksperymentu.</p>
+                <button class="gemini-button" onclick="fetchProlog(this, 'Echo Pustki', 'Detektyw w neonowym mieście ściga mordercę kradnącego wspomnienia.')" data-lang="book-prolog">
+                    ✨ Wygeneruj Alternatywny Prolog
+                </button>
+                <div class="api-response" style="display: none;"></div>
+            </div>
+
+            <div class="book">
+                <div class="book-cover" style="background-image: url('https://via.placeholder.com/600x900.png?text=Okładka+Książki+2'); background-size: cover;"></div>
+                <h3>Gwiezdna Kołyska</h3>
+                <p data-lang="book2-desc">Ostatni statek-arka opuszcza umierającą Ziemię. Komputer pokładowy zaczyna rozwijać własną religię.</p>
+                <button class="gemini-button" onclick="fetchProlog(this, 'Gwiezdna Kołyska', 'Ostatni statek-arka z umierającej Ziemi. Komputer pokładowy rozwija własną religię.')" data-lang="book-prolog">
+                    ✨ Wygeneruj Alternatywny Prolog
+                </button>
+                <div class="api-response" style="display: none;"></div>
+            </div>
+
+        </section>
+
+        <section id="oracle" class="container" style="background-color: #1a1a2a; border-radius: 8px;">
+            <h2 class="text-gradient" data-lang="oracle-title">Wyrocznia Pisarza</h2>
+            <p data-lang="oracle-desc" style="color: #aaa;">Pociągnij kartę losu i otrzymaj inspirację ze strumienia danych.</p>
+            <button class="gemini-button" id="oracle-button" onclick="fetchOracle(this)" data-lang="oracle-button">
+                🔮 Odkryj swój los
+            </button>
+            <div class="api-response" id="oracle-response" style="display: none;"></div>
+        </section>
+    </main>
+
+    <footer style="text-align: center; padding: 40px; color: #555;">
+        &copy; 2025 Alex Starfall. Wszelkie prawa zastrzeżone.
+    </footer>
+
+    <script>
+        // --- System Tłumaczeń ---
+        const translations = {
+            'pl': {
+                'hero-title': 'Gdy Atrament Spotyka Gwiezdny Pył',
+                'hero-subtitle': 'Powieści z pogranicza mroku, technologii i nieskończoności.',
+                'books-title': 'Książki',
+                'book1-desc': 'Detektyw w neonowym mieście ściga mordercę, który kradnie wspomnienia. Nie wie, że sam jest częścią eksperymentu.',
+                'book2-desc': 'Ostatni statek-arka opuszcza umierającą Ziemię. Komputer pokładowy zaczyna rozwijać własną religię.',
+                'book-prolog': '✨ Wygeneruj Alternatywny Prolog',
+                'oracle-title': 'Wyrocznia Pisarza',
+                'oracle-desc': 'Pociągnij kartę losu i otrzymaj inspirację ze strumienia danych.',
+                'oracle-button': '🔮 Odkryj swój los',
+            },
+            'en': {
+                'hero-title': 'Where Ink Meets Stardust',
+                'hero-subtitle': 'Novels from the edge of darkness, technology, and the infinite.',
+                'books-title': 'Books',
+                'book1-desc': 'A detective in a neon city hunts a memory-stealing killer, unaware he is part of the experiment.',
+                'book2-desc': 'The last ark ship leaves a dying Earth. Its onboard AI begins to develop its own religion.',
+                'book-prolog': '✨ Generate Alternate Prologue',
+                'oracle-title': 'The Writer\'s Oracle',
+                'oracle-desc': 'Pull a card from the data stream and receive your inspiration.',
+                'oracle-button': '🔮 Discover Your Fate',
+            },
+            'ru': {
+                'hero-title': 'Где Чернила Встречаются со Звездной Пылью',
+                'hero-subtitle': 'Романы на грани Tьмы, технологий и бесконечности.',
+                'books-title': 'Книги',
+                'book1-desc': 'Детектив в неоновом городе охотится на убийцу, крадущего воспоминания, не зная, что он сам часть эксперимента.',
+                'book2-desc': 'Последний корабль-ковчег покидает умирающую Землю. Бортовой ИИ начинает развивать собственную религию.',
+                'book-prolog': '✨ Создать Альтернативный Пролог',
+                'oracle-title': 'Оракул Писателя',
+                'oracle-desc': 'Вытяни карту судьбы из потока данных и получи свое вдохновение.',
+                'oracle-button': '🔮 Узнай свою судьбу',
+            }
+        };
+
+        function changeLanguage(lang) {
+            document.documentElement.lang = lang;
+            document.querySelectorAll('[data-lang]').forEach(el => {
+                const key = el.getAttribute('data-lang');
+                if (translations[lang][key]) {
+                    el.innerText = translations[lang][key];
+                }
+            });
+            document.querySelectorAll('#lang-switcher button').forEach(btn => {
+                btn.classList.toggle('active', btn.getAttribute('onclick') === `changeLanguage('${lang}')`);
+            });
+        }
+        
+        // Ustaw język polski jako domyślny przy starcie
+        changeLanguage('pl');
+
+        // --- System API Gemini ---
+        
+        // Funkcja dla Prologów
+        async function fetchProlog(button, title, description) {
+            const responseContainer = button.nextElementSibling;
+            const currentLang = document.documentElement.lang;
+            const prompt = `Jesteś botem kreatywnym na stronie pisarza Alexa Starfalla. Napisz jeden, krótki (2-3 zdania), mroczny i alternatywny prolog do książki pt. "${title}", bazując na opisie: "${description}". Odpowiedz w języku: ${currentLang}.`;
+
+            await callGeminiApi(prompt, button, responseContainer);
+        }
+
+        // Funkcja dla Wyroczni
+        async function fetchOracle(button) {
+            const responseContainer = document.getElementById('oracle-response');
+            const currentLang = document.documentElement.lang;
+            const prompt = `Jesteś "Wyrocznią Pisarza" Alexa Starfalla. Daj użytkownikowi jedną, tajemniczą, mroczną i inspirującą przepowiednię w formie jednego zdania. Odpowiedz w języku: ${currentLang}.`;
+            
+            await callGeminiApi(prompt, button, responseContainer);
+        }
+
+        // Główna funkcja do komunikacji z naszym backendem
+        async function callGeminiApi(prompt, button, responseContainer) {
+            button.disabled = true;
+            responseContainer.style.display = 'block';
+            responseContainer.style.opacity = '0.5';
+            responseContainer.innerText = 'Przetwarzanie...';
+
+            try {
+                const response = await fetch('/.netlify/functions/gemini-proxy', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ prompt: prompt })
+                });
+
+                if (!response.ok) {
+                    // To jest fragment, który się uciął
+                    const errorData = await response.json();
+                    throw new Error(errorData.error || `Błąd serwera: ${response.statusText}`);
+                }
+
+                const data = await response.json();
+                
+                responseContainer.innerText = data.text;
+                responseContainer.style.opacity = '1';
+
+            } catch (error) {
+                console.error('Błąd wywołania API:', error);
+                responseContainer.innerText = 'Wystąpił błąd. Spróbuj ponownie później.';
+                responseContainer.style.opacity = '1';
+            } finally {
+                button.disabled = false;
+            }
+        }
+    </script>
+</body>
+</html>
